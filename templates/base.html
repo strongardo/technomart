@@ -1,0 +1,169 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cuprum:ital,wght@0,400..700;1,400..700&display=swap"
+          rel="stylesheet">
+    <link rel="icon" href="{% static 'img/картинки сайт1/favicon.jpg' %}">
+</head>
+
+<body>
+<header class="header">
+    <div class="top-header">
+        <div class="container top-header-wraper">
+
+            <a href="{% url 'home_url' %}">
+                <div class="logo">
+                    Техномарт
+                </div>
+            </a>
+            <form action="{% url 'search_url' %}" method="get">
+                <input name='search_value' type="search" class="search" placeholder="Найти:">
+            </form>
+
+            <ul class="top-header-list">
+                <li>
+                    <a href="" class="bookmark">Закладки: 0</a>
+                </li>
+                <li>
+                    <a href="{% url 'cart_url' %}" class="cart">Корзина: {{number}}</a>
+
+                </li>
+                <li>
+                    <a href="" class="order">Оформить заказ</a>
+                </li>
+            </ul>
+        </div>
+
+    </div>
+
+    <div class="header-middle container">
+        <h1 class="page-title">
+            Интернет-магазин строительных материалов и инструментов для ремонта
+        </h1>
+        <div class="header-contacts">
+            <a href="+79893881702" class="tel">+7 (989) - 388 - 17 - 02</a>
+            <p>г. Санкт-Петербург, ул. Б. Конюшенная, д. 19/8</p>
+        </div>
+        <div class="user-buttons">
+            {% if user.is_authenticated %}
+            <form method="post" action="{% url 'logout_url' %}" >
+                {% csrf_token %}
+                <button class="user-btn user-btn-enter log-out" type="submit" >Выйти</button>
+            </form>
+            {% else %}
+            <a href="{% url 'login_url' %}" class="user-btn user-btn-enter">Войти</a>
+            <a href="{% url 'register_url' %}" class="user-btn">Регистрация</a>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="bottom-header container">
+        <nav>
+            <ul class="nav-list">
+                <li>
+                    <a href="{% url 'home_url' %}">Главная</a>
+                </li>
+                <li>
+                    <a href="">Компания</a>
+                </li>
+                <li>
+                    <a href="{% url 'catalog_url' %}">Каталог</a>
+                </li>
+                <li>
+                    <a href="">Новости</a>
+                </li>
+                <li>
+                    <a href="">Спецпредложения</a>
+                </li>
+                <li>
+                    <a href="">Доставка</a>
+                </li>
+                <li>
+                    <a href="">Контакты</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+</header>
+{% block content %}
+{% endblock %}
+<footer>
+    <div class="footer-top">
+        <div class="footer-top-wrapper container">
+            <div class="logo logo-footer">
+                Техномарт
+            </div>
+            <ul class="footer-list">
+                <li>
+                    <a href="">Компания</a>
+                </li>
+                <li>
+                    <a href="">Каталог</a>
+                </li>
+                <li>
+                    <a href="">Новости</a>
+                </li>
+                <li>
+                    <a href="">Доставка</a>
+                </li>
+                <li>
+                    <a href="">Контакты</a>
+                </li>
+            </ul>
+
+            <p class="footer-contacts footer-adres">г. Санкт-Петербург, ул. Большая конюшенная д. 19\8</p>
+            <ul class="footer-list footer-list2">
+                <li>
+                    <a href="">Материалы</a>
+                </li>
+                <li>
+                    <a href="">Техника</a>
+                </li>
+                <li>
+                    <a href="">Инструмент</a>
+                </li>
+                <li>
+                    <a href="">Спецпиложения</a>
+                </li>
+            </ul>
+            <p class="footer-contacts">+7(925)-999-17-77</p>
+        </div>
+
+
+    </div>
+
+
+    <div class="footer-top footer-bottom">
+        <div class="footer-top-wrapper container">
+            <p class="copy-right">© 2010–2024 Компания «Техномарт»<br> Все права защищены</p>
+            <ul class="social-list">
+                <li>
+                    <a href=""><img src="{% static 'img/картинки сайт1/vk-icon.svg' %}" alt=""></a>
+                </li>
+                <li>
+                    <a href=""><img src="{% static 'img/картинки сайт1/fb-icon.svg' %}" alt=""></a>
+                </li>
+                <li>
+                    <a href=""><img src="{% static 'img/картинки сайт1/insta-icon.svg' %}" alt=""></a>
+                </li>
+            </ul>
+            <p class="footer-feedback">Обратная связь: <br> <a
+                    href="mailto:mail@htmlacademy.ru">mail@htmlacademy.ru</a></p>
+            <p class="footer-feedback">Разработанно - <br> <a href="htmlacademy.ru">htmlacademy.ru</a></p>
+        </div>
+    </div>
+
+
+</footer>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+
+</html>

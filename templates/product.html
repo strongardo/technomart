@@ -1,0 +1,16 @@
+<li class="perforator1">
+    <div class="product-image-wrapper">
+        <img width="150" height="150" src="{{i.image.url}}" alt="">
+    </div>
+
+    <h3>{{i.name}}</h3>
+    <p class="old-price">{{i.old_price}}Р.</p>
+    <form method="post" action="{% url 'add_to_cart' i.id %}">
+        {% csrf_token %}
+        <button>{{i.price}}Р.</button>
+    </form>
+
+
+
+
+</li>

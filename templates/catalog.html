@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Каталог{% endblock %}
+{% block content %}
+
+<main>
+    <div class="container">
+        <h1 class="catalog-title">ПЕРФОРАТОРЫ</h1>
+    </div>
+    <section class="catalog container">
+        <div class="catalog-div1">
+            <h3 class="filter-title">Фильтр:</h3>
+            <form action="{% url 'catalog_url' %}" method="get">
+                <fieldset>
+                    <legend class="legend">ЦЕНА:</legend>
+                    <div class="range-wrapper"><input class="range" type="range"></div>
+                    <div class="output-wrapper">
+                        <input type="number" name="minprice" value="0" class="output">
+                        <span>-</span>
+                        <input type="number" name="maxprice" value="100000" class="output">
+                    </div>
+
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">ПРОИЗВОДИТЕЛИ:</legend>
+                    <label>
+                        <input value="bosch" name="manufacturer" class="checkbox" type="checkbox">
+                        <span>BOSCH</span>
+                    </label>
+                    <label>
+                        <input value="interskol" name="manufacturer" class="checkbox" type="checkbox">
+                        <span>ИНТЕРСКОЛ</span>
+                    </label>
+                    <label>
+                        <input value="makita" name="manufacturer" class="checkbox" type="checkbox">
+                        <span>Makita</span>
+                    </label>
+                    <label>
+                        <input value="vihr" name="manufacturer" class="checkbox" type="checkbox">
+                        <span>ВИХРЬ</span>
+                    </label>
+                    <label>
+                        <input value="zubr" name="manufacturer" class="checkbox" type="checkbox">
+                        <span>ЗУБР</span>
+                    </label>
+                </fieldset>
+                <fieldset>
+                    <legend class="legend">ПИТАНИЕ:</legend>
+                    <label>
+                        <input class="radio" name="radio" type="radio">
+                        <span>АККУМУЛЯТОРНЫЕ</span>
+                    </label>
+                    <label>
+                        <input class="radio" name="radio" type="radio">
+                        <span>СЕТЕВЫЕ</span>
+                    </label>
+                </fieldset>
+                <button class="submit-btn" type="submit">Показать</button>
+            </form>
+        </div>
+        <div class="catalog1">
+            <div class="catalog-div2">
+                <h3 class="sort-title">СОРТИРОВКА:</h3>
+                <ul class="sort-list">
+                    <li>
+                        <button class="sort-button">ПО ЦЕНЕ</button>
+                    </li>
+                    <li>
+                        <button class="sort-button">ПО ТИПУ</button>
+                    </li>
+                    <li>
+                        <button class="sort-button">ПО ФУНКЦИОНАЛУ</button>
+                    </li>
+                </ul>
+                <ul class="sort-list1">
+                    <li>
+                        <button class="sort-button1 sort-button-up"></button>
+                    </li>
+                    <li>
+                        <button class="sort-button1 sort-button-down"></button>
+                    </li>
+                </ul>
+            </div>
+            <div>
+                <ul class="products-list">
+                    {% for i in perfs %}
+                    {% include "product.html" %}
+                    {% endfor %}
+                </ul>
+            </div>
+    </section>
+    <section class="perf-info">
+        <div class="container">
+            <h3 class="perf-info-title">ПАРА СЛОВ О ПЕРФОРАТОРАХ</h3>
+            <p class="perf-info-text">Перфоратор - универсальный строительный инструмент. Предназначен для сверления
+                и долбления отверстий в кирпиче, бетоне и камне. <br>
+                Существует электромеханические и пневматические перфораторы. Современные модели могут выполнять
+                функции дрели, шуруповерта и отбойного молотка. <br>
+                В ассортиментном рябу есть выбор "трехрежимников": в одном устройстве будут совмещены отбойный
+                молоток и ударная дрель.</p>
+
+        </div>
+
+    </section>
+</main>
+{% endblock %}

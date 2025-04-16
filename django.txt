@@ -1,0 +1,50 @@
+django-admin startproject tehnomart - создание django проекта
+cd .\tehnomart\ - перейти в каталог проекта
+python manage.py startapp home - содание django приложения
+python manage.py makemigrations - создание миграции
+python manage.py migrate - применение миграции
+python manage.py createsuperuser - создание супер-пользователя
+python manage.py runserver - запуск локального сервера
+os.path.join(BASE_DIR, 'templates') - подключение каталогов
+
+MVT(MODELS-VIEWS-TEMPLATES)
+models (модели) - python классы используемые для создания структуры базы данных
+views (представления) - python функции. Определяют что будет переданно браузеру в ответ на запрос по определённому url
+templates (шаблоны) - особые HTML фаилы
+
+.venv/Scripts/activate - активация виртуального окружения
+
+---Поля для связи между моделями---
+Все три вида полей нужны для того, чтобы Django понимал, как организовать связи между таблицами в базе данных.
+
+1) ForeignKey (Один ко многим):
+- Когда использовать: Один объект связан с несколькими другими, но каждый из них связан только с одним.
+- Пример: Товар ↔️ Категория. Каждый товар принадлежит одной категории, но к одной категории может относиться несколько товаров.
+class Product(models.Model):
+    ...
+    category = models.ForeignKey(Category, on_delete=models.CASCADE, related_name='products')
+- on_delete=models.CASCADE. При удалении категории, все связанные продукты будут удалены. При удалении продукта, категория останется, так как она независима от продукта. Можно использовать "on_delete=models.SET_NULL" - тогда при удалении категории, связанные продукты не будут удалены, а поле category в модели Product становится NULL.
+- База данных: В таблице Product будет столбец category_id, который хранит ID связанной категории.
+
+2) ManyToManyField (Многие ко многим):
+- Когда использовать: Много объектов связано с другими многими объектами.
+- Пример: Товар ↔️ Наполнители. Один товар может содержать несколько наполнителей, и один наполнитель может использоваться в разных товарах.
+class Product(models.Model):
+    ...
+    fillers = models.ManyToManyField(Filler, related_name='products')
+- on_delete отсутствует, так как ManyToManyField работает через промежуточную таблицу.Удаление объектов (Filler или Product) автоматически удаляет связи между ними из промежуточной таблицы.
+- База данных: Автоматически создаётся промежуточная таблица product_fillers со столбцами product_id и filler_id.
+
+
+3) OneToOneField (Один к одному):
+- Когда использовать: Один объект связан строго с одним другим.
+- Пример: Товар ↔️ Специальная скидка. Каждый товар имеет одну скидку, как и одна скидка принадлежит только одному товару.
+class Product(models.Model):
+    ...
+    discount = models.OneToOneField(Discount, on_delete=models.SET_NULL, null=True, blank=True, related_name='product')
+- on_delete=models.SET_NULL. Если объект Discount(скидка) удаляется, то поле discount в модели Product становится NULL. Товар не удаляется.
+- База данных: В таблице Product будет столбец discount_id, который хранит ID связанной скидки. На этот столбец накладывается ограничение уникальности(UNIQUE), чтобы одна скидка могла быть связана только с одним продуктом.
+
+
+
+pip freeze > requirements.txt - создать фаил с зависимостями проекта
